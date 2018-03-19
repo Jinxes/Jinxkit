@@ -4,6 +4,7 @@ namespace Jinxkit\tests;
 
 use PHPUnit\Framework\TestCase;
 use Jinxkit\Library\FieldFactory;
+use Jinxkit\Library\HttpException;
 use Jinxkit\Library\Storage;
 use Jinxkit\Library\Field;
 use Jinxkit\Route;
@@ -81,6 +82,35 @@ class RouteTest extends TestCase
     {
         $list = Route::callRestfulFunction(Test2Service::class, 'test1', [2, 3]);
         $this->assertEquals($list, [1, 2, 3]);
+    }
+
+    public function testGetPathInfo()
+    {
+        $_SERVER['PATH_INFO'] = 'test';
+        $pathinfo = Route::getPathInfo();
+        $this->assertEquals($pathinfo, 'test');
+    }
+
+    public function testScan()
+    {
+        $fieldFactory = new FieldFactory();
+        $fieldFactory->post('test', Field::class, 'requestMethod');
+        $_SERVER['PATH_INFO'] = '/test';
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->runScan();
+        Storage::reset();
+    }
+
+    private function runScan()
+    {
+        try {
+            $result = Route::scan();
+            $this->assertEquals($result, 1);
+        } catch (\Throwable $t) {
+            $this->assertInstanceOf(HttpException::class, $t);
+        } catch (\Exception $e) {
+            $this->assertInstanceOf(HttpException::class, $e);
+        }
     }
 
     private function methodTest($method)

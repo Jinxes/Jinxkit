@@ -38,4 +38,4 @@ Route::group('api', function(Router $router) {
 
 Route::get('user2/:num', User::class, 'test2')->setName('user2');
 
-Route::scan();
+Route::start();

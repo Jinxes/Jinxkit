@@ -113,10 +113,10 @@ class Field
         return $this->type;
     }
 
-    /** @return string */
+    /** @return string|null */
     public function getHttpMethod()
     {
-        return $this->httpMethod;
+        return empty($this->httpMethod) ? null : $this->httpMethod;
     }
 
     /** @return string */
@@ -161,14 +161,30 @@ class Field
         return (bool)($this->getType() === static::TYPE_EMBED);
     }
 
-    /** @return string */
+    /**
+     * @return string
+     * 
+     * @throw HttpException
+     */
     public function getMethod()
     {
-        $httpMethod = $this->getFunc();
-        if (empty($httpMethod)) {
-            return $this->requestMethod();
+        $httpMethod = $this->getHttpMethod();
+        $method = $this->requestMethod();
+        $func = $this->getFunc();
+        return empty($func) ? $method : $httpMethod;
+    }
+
+    /** @return bool */
+    public function methodIsValid()
+    {
+        $httpMethod = $this->getHttpMethod();
+        $method = $this->requestMethod();
+        if (!is_null($httpMethod)) {
+            if ($httpMethod === $method) {
+                return true;
+            }
         }
-        return $httpMethod;
+        return false;
     }
 
     /**

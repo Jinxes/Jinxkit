@@ -19,6 +19,11 @@ class FieldTest extends TestCase
         $this->setMethodTest('type', Field::TYPE_REST);
     }
 
+    public function testSetName()
+    {
+        $this->setMethodTest('name', 'test');
+    }
+
     public function testSetClassName()
     {
         $this->setMethodTest('className', 'test');
@@ -52,6 +57,11 @@ class FieldTest extends TestCase
         $this->getMethodTest('type', Field::TYPE_REST);
     }
 
+    public function testGetName()
+    {
+        $this->getMethodTest('name', 'test');
+    }
+
     public function testGetClassName()
     {
         $this->getMethodTest('className', 'test');
@@ -73,6 +83,28 @@ class FieldTest extends TestCase
     public function testGetParams()
     {
         $this->getMethodTest('params', ['test', 1]);
+    }
+
+    public function testIsTypeRest()
+    {
+        $field = new Field();
+        $field->setType(Field::TYPE_REST);
+        $this->assertTrue($field->isTypeRest());
+    }
+
+    public function testIsTypeEmbed()
+    {
+        $field = new Field();
+        $field->setType(Field::TYPE_EMBED);
+        $this->assertTrue($field->isTypeEmbed());
+    }
+
+    public function testRequestMethod()
+    {
+        $field = new Field();
+        $_SERVER['REQUEST_METHOD'] = 'GET';
+        $this->assertEquals($field->requestMethod(), 'get');
+        $this->assertEquals($field->requestMethod(true), 'GET');
     }
 
 

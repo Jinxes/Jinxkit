@@ -5,6 +5,7 @@ use Jinxkit\Library\Storage;
 use Jinxkit\Library\Field;
 use Jinxkit\Library\Group;
 use Jinxkit\Library\Container;
+use Jinxkit\Library\HttpException;
 
 
 /**
@@ -128,31 +129,43 @@ class Route
         return $group->method($methodType, $uri, $className, $func);
     }
 
+    /** router match and send response */
+    public static function start()
+    {
+        try {
+            static::scan();
+        } catch(HttpException $httpException) {
+            $code = $httpException->getStatusCode();
+            http_response_code($code);
+        }
+    }
+
     /**
-     * match path info to execute api
+     * match all path for execute api
      * 
      * @return mixed
+     * 
+     * @throw HttpException
      */
     public static function scan()
     {
         $field = Storage::getFieldByUrl(static::getPathInfo());
         if ($field === false) {
-            echo 404;
-            return;
+            throw new HttpException(404);
         }
         // TODO run midware
 
-        $params = Storage::getParamsFromUrl(
-            $field->getUri(), static::getPathInfo()
-        );
-        if ($field->isTypeRest()) {
-            return static::callRestfulFunction(
-                $field->getClassName(), $field->getMethod(), $params
-            );
+        if ($field->methodIsValid()) {
+            $params = Storage::getParamsFromUrl($field->getUri(), static::getPathInfo());
+            if ($field->isTypeRest()) {
+                return static::callRestfulFunction(
+                    $field->getClassName(), $field->getMethod(), $params
+                );
+            }
+            return Container::callReflectionFunction($field->getFunc(), $params);
         }
-        return Container::callReflectionFunction(
-            $field->getClassName(), $params
-        );
+
+        throw new HttpException(405);
     }
 
     /**
