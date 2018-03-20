@@ -5,10 +5,8 @@ namespace Jinxkit\Library;
 /**
  * Di Container
  * 
- * @method   array            $storage
- * @method   array            $classStorage
- * @method   ReflectionClass  $singletons
- * @method   array            $reflections
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 class Container
 {
@@ -119,6 +117,12 @@ class Container
         $this->reflections = $refObject;
     }
 
+    /** @return mixed */
+    public function getInstance()
+    {
+        return $this->singletons;
+    }
+
     /**
      * @param string $method
      * @param array $inherentParams
@@ -151,6 +155,8 @@ class Container
      * @param int inherentNumber
      * 
      * @return array
+     * 
+     * @internal
      */
     private function getParams($refClass, $method, $inherentNumber = 0)
     {

@@ -5,7 +5,8 @@ namespace Jinxkit\Library;
 /**
  * container of Route Fields
  * 
- * @method \SplObjectStorage $storage
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 final class Storage
 {
@@ -119,6 +120,8 @@ final class Storage
      * @param string $url
      * 
      * @return string
+     * 
+     * @internal
      */
     private static function makeRegUrl($url)
     {

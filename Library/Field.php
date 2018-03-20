@@ -5,14 +5,8 @@ namespace Jinxkit\Library;
 /**
  * Route field struct
  * 
- * @static int TYPE_REST
- * @static int TYPE_EMBED
- * 
- * @method  string           $uri
- * @method  int              $type
- * @method  string           $className
- * @method  string|callback  $func
- * @method  array<string>           $midware
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 class Field
 {
@@ -168,10 +162,9 @@ class Field
      */
     public function getMethod()
     {
-        $httpMethod = $this->getHttpMethod();
         $method = $this->requestMethod();
         $func = $this->getFunc();
-        return empty($func) ? $method : $httpMethod;
+        return empty($func) ? $method : $func;
     }
 
     /** @return bool */
@@ -189,6 +182,8 @@ class Field
 
     /**
      * @return string
+     * 
+     * @internal
      */
     public function requestMethod($isUp = false)
     {

@@ -5,7 +5,8 @@ namespace Jinxkit\Library;
 /**
  * Route Field Maker
  * 
- * @method  string  $uri
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 class FieldFactory
 {
@@ -133,6 +134,8 @@ class FieldFactory
     /**
      * @param callback|null $callable
      * @param string $fieldUri
+     * 
+     * @internal
      */
     private function callbackHandle($callable, $fieldUri)
     {
@@ -148,6 +151,8 @@ class FieldFactory
      * @param string $uri
      * 
      * @return string
+     * 
+     * @internal
      */
     private function makeUri($uri)
     {

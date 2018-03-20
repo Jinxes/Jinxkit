@@ -10,9 +10,23 @@ use Jinxkit\Library\HttpException;
 
 /**
  * foundation entry
+ * 
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 class Route
 {
+    /** @var array */
+    private static $configure = [
+        'midwareEntry' => '__invoke'
+    ];
+
+    /** @param array $config */
+    public static function config(array $config)
+    {
+        static::$configure = $config + static::$configure;
+    }
+
     /**
      * @param string $groupUri
      * @param callback $callable
@@ -146,6 +160,8 @@ class Route
      * @return mixed
      * 
      * @throw HttpException
+     * 
+     * @internal
      */
     public static function scan()
     {
@@ -153,19 +169,56 @@ class Route
         if ($field === false) {
             throw new HttpException(404);
         }
-        // TODO run midware
-
+        
         if ($field->methodIsValid()) {
             $params = Storage::getParamsFromUrl($field->getUri(), static::getPathInfo());
-            if ($field->isTypeRest()) {
-                return static::callRestfulFunction(
-                    $field->getClassName(), $field->getMethod(), $params
-                );
+            if (! static::callMidwares($field, $params)) {
+                return false;
             }
-            return Container::callReflectionFunction($field->getFunc(), $params);
+            static::callController($field, $params);
+        } else {
+            throw new HttpException(405);
         }
+    }
 
-        throw new HttpException(405);
+    /**
+     * @param Field $field
+     * @param array $params
+     * 
+     * @return bool
+     * 
+     * @internal
+     */
+    public static function callMidwares($field, $params)
+    {
+        $midwares = $field->getMidware();
+        foreach ($midwares as $midware) {
+            $container = Container::initialization($midware);
+            $instance = $container->getInstance();
+            $instance->args = $params;
+            $result = $container->reverse(static::$configure['midwareEntry']);
+            if ($result === false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param Field $field
+     * @param array $params
+     * 
+     * @internal
+     */
+    public static function callController($field, $params)
+    {
+        if ($field->isTypeRest()) {
+            static::callRestfulFunction(
+                $field->getClassName(), $field->getMethod(), $params
+            );
+        } else {
+            Container::callReflectionFunction($field->getFunc(), $params);
+        }
     }
 
     /**
@@ -184,6 +237,8 @@ class Route
      * @param array $params
      * 
      * @return mixed
+     * 
+     * @internal
      */
     public static function callRestfulFunction($subject, $method, $params = [])
     {

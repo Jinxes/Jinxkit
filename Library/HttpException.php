@@ -5,7 +5,10 @@ use RuntimeException;
 
 
 /**
- * @method int $statusCode
+ * exception with http response
+ * 
+ * @author   Jinxes<blldxt@yahoo.com>
+ * @version  1.0
  */
 class HttpException extends RuntimeException
 {
