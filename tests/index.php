@@ -40,18 +40,20 @@ Route::config([
 ]);
 
 Route::group('api', function(Router $router) {
-    $field2 = $router->restful('user', User::class, function(Router $router1) {
-        $field1 = $router1->get('testGet', User::class)->setName('testGet')->setMidware([
-            User::class
+    $field2 = $router->restful('ser', User::class, function(Router $router1) {
+        $field1 = $router1->get('testGet', User::class, 'get')->setName('testGet')->setMidware([
+            Midtest::class
         ]);
-        $field3 = $router1->delete('testGet', function() {
-            return 11;
-        })->setName('testGet');
     });
 });
 
 Route::get('user2/:num', User::class, 'test2')
 ->setMidware([Midtest::class])
 ->setName('user2');
+
+Route::get('user3/:num', function (User $user, $num) {
+    $user->get();
+})
+->setName('user3');
 
 Route::start();

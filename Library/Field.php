@@ -41,14 +41,14 @@ class Field
     private $name;
 
     /** @param string $uri */
-    public function setUri(string $uri)
+    public function setUri($uri)
     {
         $this->uri = $uri;
         return $this;
     }
 
     /** @param int $type */
-    public function setType(int $type)
+    public function setType($type)
     {
         $this->type = $type;
         return $this;
@@ -61,7 +61,7 @@ class Field
     }
 
     /** @param string $className */
-    public function setClassName(string $className)
+    public function setClassName($className)
     {
         $this->className = $className;
         return $this;
@@ -89,7 +89,7 @@ class Field
     }
 
     /** @var string $name */
-    public function setName(string $name)
+    public function setName($name)
     {
         $this->name = $name;
         return $this;
@@ -155,6 +155,33 @@ class Field
         return (bool)($this->getType() === static::TYPE_EMBED);
     }
 
+    /** @return bool */
+    public function isStandardRestfulMethod()
+    {
+        return (bool)(empty($this->getHttpMethod()) && $this->isTypeRest());
+    }
+
+    /** @return bool */
+    public function isUnstandardRestfulMethod()
+    {
+        $httpMethod = $this->getHttpMethod();
+        $method = $this->requestMethod();
+        if (!is_null($httpMethod)) {
+            if ($httpMethod === $method) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** @return bool */
+    public function methodIsValid()
+    {
+        $isRM = $this->isStandardRestfulMethod();
+        $isURM = $this->isUnstandardRestfulMethod();
+        return (bool) ($isRM or $isURM);
+    }
+
     /**
      * @return string
      * 
@@ -165,19 +192,6 @@ class Field
         $method = $this->requestMethod();
         $func = $this->getFunc();
         return empty($func) ? $method : $func;
-    }
-
-    /** @return bool */
-    public function methodIsValid()
-    {
-        $httpMethod = $this->getHttpMethod();
-        $method = $this->requestMethod();
-        if (!is_null($httpMethod)) {
-            if ($httpMethod === $method) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**

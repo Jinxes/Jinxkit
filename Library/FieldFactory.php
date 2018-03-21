@@ -159,6 +159,6 @@ class FieldFactory
         if ($this->uri === '') {
             return $uri;
         }
-        return $this->uri . DIRECTORY_SEPARATOR . $uri;
+        return $this->uri . '/' . $uri;
     }
 }
