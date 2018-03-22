@@ -40,7 +40,7 @@ Route::config([
 ]);
 
 Route::group('api', function(Router $router) {
-    $field2 = $router->restful('ser', User::class, function(Router $router1) {
+    $field2 = $router->restful('user', User::class, function(Router $router1) {
         $field1 = $router1->get('testGet', User::class, 'get')->setName('testGet')->setMidware([
             Midtest::class
         ]);

@@ -102,7 +102,7 @@ final class Storage
     public static function getParamsFromUrl($subUrl, $pubUrl)
     {
         $urlinfo = static::makeRegUrl('/' . $subUrl);
-        $regexp = '/^'. $urlinfo .'\/?$/';
+        $regexp = '/^'. $urlinfo .'\/?$/ui';
         if (\preg_match($regexp, $pubUrl, $match)) {
             array_shift($match);
             return $match;
