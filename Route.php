@@ -207,8 +207,6 @@ class Route
     /**
      * @param Field $field
      * @param array $params
-     * 
-     * @internal
      */
     public static function callController($field, $params)
     {
