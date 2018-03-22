@@ -107,6 +107,75 @@ class FieldTest extends TestCase
         $this->assertEquals($field->requestMethod(true), 'GET');
     }
 
+    public function testIsStandardRestfulMethod()
+    {
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'getHttpMethod', 'isTypeRest'
+        ])->getMock();
+        $field->method('getHttpMethod')->willReturn(null);
+        $field->method('isTypeRest')->willReturn(true);
+        $result = $field->isStandardRestfulMethod();
+        $this->assertTrue($result);
+    }
+
+    public function testIsUnstandardRestfulMethod()
+    {
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'getHttpMethod', 'requestMethod'
+        ])->getMock();
+        $field->method('getHttpMethod')->willReturn('GET');
+        $field->method('requestMethod')->willReturn('GET');
+        $result = $field->isUnstandardRestfulMethod();
+        $this->assertTrue($result);
+
+        $field2 = $this->getMockBuilder(Field::class)->setMethods([
+            'getHttpMethod', 'requestMethod'
+        ])->getMock();
+        $field2->method('getHttpMethod')->willReturn('GET');
+        $field2->method('requestMethod')->willReturn('POST');
+        $result2 = $field2->isUnstandardRestfulMethod();
+        $this->assertFalse($result2);
+    }
+
+    public function testIsRestfulMethod()
+    {
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'isStandardRestfulMethod', 'isUnstandardRestfulMethod'
+        ])->getMock();
+        $field->method('isStandardRestfulMethod')->willReturn(true);
+        $field->method('isUnstandardRestfulMethod')->willReturn(true);
+        $result = $field->isRestfulMethod();
+        $this->assertTrue($result);
+    }
+
+    public function testMethodIsValid()
+    {
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'isRestfulMethod'
+        ])->getMock();
+        $field->method('isRestfulMethod')->willReturn(true);
+        $result = $field->methodIsValid();
+        $this->assertTrue($result);
+    }
+
+    public function testGetMethod()
+    {
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'requestMethod', 'getFunc'
+        ])->getMock();
+        $field->method('getFunc')->willReturn(null);
+        $field->method('requestMethod')->willReturn('get');
+        $result = $field->getMethod();
+        $this->assertEquals($result, 'get');
+
+        $field = $this->getMockBuilder(Field::class)->setMethods([
+            'requestMethod', 'getFunc'
+        ])->getMock();
+        $field->method('getFunc')->willReturn('test');
+        $field->method('requestMethod')->willReturn(null);
+        $result = $field->getMethod();
+        $this->assertEquals($result, 'test');
+    }
 
     private function setMethodTest($fd, $data)
     {

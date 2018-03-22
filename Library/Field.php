@@ -143,7 +143,10 @@ class Field
         return $this->name;
     }
 
-    /** @return bool */
+    /**
+     * rest has methods for http request, and don't check http method
+     * @return bool
+     */
     public function isTypeRest()
     {
         return (bool)($this->getType() === static::TYPE_REST);
@@ -175,11 +178,20 @@ class Field
     }
 
     /** @return bool */
-    public function methodIsValid()
+    public function isRestfulMethod()
     {
         $isRM = $this->isStandardRestfulMethod();
         $isURM = $this->isUnstandardRestfulMethod();
         return (bool) ($isRM or $isURM);
+    }
+
+    /**
+     * only restful type has method
+     * @return bool
+     */
+    public function methodIsValid()
+    {
+        return $this->isRestfulMethod();
     }
 
     /**
