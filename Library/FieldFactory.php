@@ -13,12 +13,6 @@ abstract class FieldFactory
     /** @var string */
     private $uri = '';
 
-    /** @param array $midware */
-    abstract public function setMidware(array $midware);
-
-    /** @return array */
-    abstract public function getMidware();
-
     /** @param string $uri */
     public function setUri($uri)
     {
@@ -133,7 +127,6 @@ abstract class FieldFactory
             $field->setFunc($className);
             $field->setType(Field::TYPE_EMBED);
         }
-        $field->setGroupMidware($this->getMidware());
         Storage::attach($field);
         return $field;
     }
@@ -147,10 +140,7 @@ abstract class FieldFactory
     private function callbackHandle($callable, $fieldUri)
     {
         if (!is_null($callable)) {
-            $groupMidware = $this->getMidware();
             $fieldFactory = new Group();
-            // inherit midware from parent
-            $fieldFactory->setMidware($groupMidware);
             $fieldFactory->setUri($fieldUri);
             $callable($fieldFactory);
         }

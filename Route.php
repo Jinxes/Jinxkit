@@ -173,9 +173,9 @@ class Route
         
         if ($field->methodIsValid()) {
             $params = Storage::getParamsFromUrl($field->getUri(), static::getPathInfo());
-            if (! static::callMidwares($field, $params)) {
-                return false;
-            }
+            // if (! static::callMidwares($field, $params)) {
+            //     return false;
+            // }
             static::callController($field, $params);
         } else {
             throw new HttpException(405);

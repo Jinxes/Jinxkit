@@ -49,20 +49,15 @@ class Midtest2
         }
     }
 }
-Route::config([
-    'midwareEntry' => 'entry'
-]);
 
-Route::group('api')->match(function(Router $router) {
-    $field2 = $router->restful('user', User::class)->match(function(Router $router1) {
+Route::group('api', function(Router $router) {
+    $field2 = $router->restful('user', User::class, function(Router $router1) {
         $router1->get('testGet', User::class, 'get')
-            ->setName('testGet')
-            ->setMidware([Midtest2::class]);
+            ->setName('testGet');
     });
-})->setMidware([Midtest::class]);
+});
 
 // Route::get('user2/:num', User::class, 'test2')
-// ->setMidware([Midtest::class])
 // ->setName('user2');
 
 // Route::get('user3/:num', function (User $user, $num) {

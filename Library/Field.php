@@ -31,17 +31,11 @@ class Field
     /** @var string|callback */
     private $func;
 
-    /** $var array */
-    private $midware = [];
-
     /** @var array */
     private $params = [];
 
     /** @var array */
     private $name;
-
-    /** @var array */
-    private $groupMidware = [];
 
     /** @param string $uri */
     public function setUri($uri)
@@ -77,13 +71,6 @@ class Field
         return $this;
     }
 
-    /** @param array $midware */
-    public function setMidware(array $midware)
-    {
-        $this->midware = array_merge($this->midware, $midware);
-        return $this;
-    }
-
     /** @param array $params */
     public function setParams(array $params)
     {
@@ -96,12 +83,6 @@ class Field
     {
         $this->name = $name;
         return $this;
-    }
-
-    /** @param FieldFactory $group */
-    public function setGroupMidware($groupMidware)
-    {
-        $this->groupMidware = $groupMidware;
     }
 
     /** @return string */
@@ -135,12 +116,6 @@ class Field
     }
 
     /** @return array */
-    public function getMidware()
-    {
-        return $this->midware;
-    }
-
-    /** @return array */
     public function getParams()
     {
         return $this->params;
@@ -150,12 +125,6 @@ class Field
     public function getName()
     {
         return $this->name;
-    }
-
-    /** @return FieldFactory */
-    public function getGroupMidware()
-    {
-        return $this->groupMidware;
     }
 
     /**

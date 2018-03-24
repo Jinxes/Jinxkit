@@ -10,22 +10,5 @@ namespace Jinxkit\Library;
  */
 class Group extends FieldFactory
 {
-    /** @var array */
-    protected $midware = [];
-
-    /**
-     * @param array $midware
-     * @return static
-     */
-    public function setMidware(array $midware)
-    {
-        $this->midware = array_merge($this->midware, $midware);
-        return $this;
-    }
-
-    /** @return array */
-    public function getMidware()
-    {
-        return $this->midware;
-    }
+    
 }

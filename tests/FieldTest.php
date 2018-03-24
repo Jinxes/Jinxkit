@@ -37,11 +37,6 @@ class FieldTest extends TestCase
         });
     }
 
-    public function testSetMidware()
-    {
-        $this->setMethodTest('midware', ['test1', 'test2']);
-    }
-
     public function testSetParams()
     {
         $this->setMethodTest('params', ['test', 1]);
@@ -73,11 +68,6 @@ class FieldTest extends TestCase
         $this->getMethodTest('func', function () {
             return true;
         });
-    }
-
-    public function testGetMidware()
-    {
-        $this->getMethodTest('midware', ['test1', 'test2']);
     }
 
     public function testGetParams()
