@@ -40,6 +40,9 @@ class Field
     /** @var array */
     private $name;
 
+    /** @var array */
+    private $groupMidware = [];
+
     /** @param string $uri */
     public function setUri($uri)
     {
@@ -77,7 +80,7 @@ class Field
     /** @param array $midware */
     public function setMidware(array $midware)
     {
-        $this->midware = $midware;
+        $this->midware = array_merge($this->midware, $midware);
         return $this;
     }
 
@@ -93,6 +96,12 @@ class Field
     {
         $this->name = $name;
         return $this;
+    }
+
+    /** @param FieldFactory $group */
+    public function setGroupMidware($groupMidware)
+    {
+        $this->groupMidware = $groupMidware;
     }
 
     /** @return string */
@@ -141,6 +150,12 @@ class Field
     public function getName()
     {
         return $this->name;
+    }
+
+    /** @return FieldFactory */
+    public function getGroupMidware()
+    {
+        return $this->groupMidware;
     }
 
     /**

@@ -36,6 +36,7 @@ class Route
         $group = new Group();
         $group->setUri($groupUri);
         $callable($group);
+        return $group;
     }
 
     /**
@@ -191,7 +192,9 @@ class Route
      */
     public static function callMidwares($field, $params)
     {
-        $midwares = $field->getMidware();
+        $fieldMidwares = $field->getMidware();
+        $groupMidwares = $field->getGroupMidware();
+        $midwares = array_merge($fieldMidwares, $groupMidwares);
         foreach ($midwares as $midware) {
             $container = Container::initialization($midware);
             $instance = $container->getInstance();
