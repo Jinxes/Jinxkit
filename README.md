@@ -39,4 +39,4 @@ Route::start();
 php -S localhost:8080
 ```
 and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:8080/index.php/sayhello/world)
-will show `hello world`
+<br />will show `hello world`
