@@ -39,9 +39,20 @@ Route::start();
 php -S localhost:8080
 ```
 and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:8080/index.php/sayhello/world)
-<br />will show:
 ```
 hello world
+```
+
+* embed router
+defind a embed router
+```php
+Route::get('embed/:str', function($word) {
+    echo $word;
+});
+```
+visit: [http://localhost:8080/index.php/embed/hello](http://localhost:8080/index.php/embed/hello)
+```
+hello
 ```
 
 * add some filters
