@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
-namespace Jinxkit\tests;
+namespace Jinxes\Jinxkit\tests;
 
 use PHPUnit\Framework\TestCase;
-use Jinxkit\Library\FieldFactory;
-use Jinxkit\Library\HttpException;
-use Jinxkit\Library\Storage;
-use Jinxkit\Library\Field;
-use Jinxkit\Route;
+use Jinxes\Jinxkit\Library\FieldFactory;
+use Jinxes\Jinxkit\Library\HttpException;
+use Jinxes\Jinxkit\Library\Storage;
+use Jinxes\Jinxkit\Library\Field;
+use Jinxes\Jinxkit\Route;
 use ReflectionClass;
 require_once 'TestService.php';
 

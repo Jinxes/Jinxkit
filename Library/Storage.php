@@ -1,5 +1,5 @@
 <?php
-namespace Jinxkit\Library;
+namespace Jinxes\Jinxkit\Library;
 
 
 /**
@@ -16,7 +16,7 @@ final class Storage
     /**
      * attach the Route Fields Storage
      * 
-     * @param \Jinxkit\Library\Field $field
+     * @param Jinxes\Jinxkit\Library\Field $field
      * @param string $name
      */
     public static function attach(Field $field)

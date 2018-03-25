@@ -1,5 +1,5 @@
 <?php
-namespace Jinxkit\Library;
+namespace Jinxes\Jinxkit\Library;
 
 use RuntimeException;
 

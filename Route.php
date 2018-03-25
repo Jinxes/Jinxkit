@@ -1,11 +1,11 @@
 <?php
-namespace Jinxkit;
+namespace Jinxes\Jinxkit;
 
-use Jinxkit\Library\Storage;
-use Jinxkit\Library\Field;
-use Jinxkit\Library\Group;
-use Jinxkit\Library\Container;
-use Jinxkit\Library\HttpException;
+use Jinxes\Jinxkit\Library\Storage;
+use Jinxes\Jinxkit\Library\Field;
+use Jinxes\Jinxkit\Library\Group;
+use Jinxes\Jinxkit\Library\Container;
+use Jinxes\Jinxkit\Library\HttpException;
 
 
 /**

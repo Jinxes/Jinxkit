@@ -2,22 +2,22 @@
 // require 'vendor/autoload.php';
 
 spl_autoload_register(function ($class) {
-    $path = str_replace('Jinxkit\\', '', $class);
+    $path = str_replace('Jinxes\\Jinxkit\\', '', $class);
     $path = strtr($path, '\\', '/');
     require $path . '.php';
 });
 
-use Jinxkit\Library\Storage;
-use Jinxkit\Library\Field;
-use Jinxkit\Library\FieldFactory as Router;
-use Jinxkit\Route;
-use Jinxkit\Library\HttpException;
+use Jinxes\Jinxkit\Library\Storage;
+use Jinxes\Jinxkit\Library\Field;
+use Jinxes\Jinxkit\Library\FieldFactory as Router;
+use Jinxes\Jinxkit\Route;
+use Jinxes\Jinxkit\Library\HttpException;
 
 class User
 {
-    public function get($num)
+    public function get($num, $aa)
     {
-        echo $num;
+        echo $aa;
     }
 
     public function test2($num)

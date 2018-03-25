@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace Jinxkit\tests;
+namespace Jinxes\Jinxkit\tests;
 require_once 'TestService.php';
 
 use PHPUnit\Framework\TestCase;
-use Jinxkit\Library\Container;
+use Jinxes\Jinxkit\Library\Container;
 
 
 final class ContainerTest extends TestCase

@@ -1,5 +1,5 @@
 <?php
-namespace Jinxkit\tests;
+namespace Jinxes\Jinxkit\tests;
 
 class TestService
 {

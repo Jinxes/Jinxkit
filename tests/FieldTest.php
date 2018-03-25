@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
-namespace Jinxkit\tests;
+namespace Jinxes\Jinxkit\tests;
 
 use PHPUnit\Framework\TestCase;
-use Jinxkit\Library\Storage;
-use Jinxkit\Library\Field;
+use Jinxes\Jinxkit\Library\Storage;
+use Jinxes\Jinxkit\Library\Field;
 use ReflectionClass;
 
 class FieldTest extends TestCase
