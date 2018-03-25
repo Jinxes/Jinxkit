@@ -9,6 +9,14 @@ use ReflectionClass;
 
 class FieldTest extends TestCase
 {
+    public function testFilterAndGetFilter()
+    {
+        $field = new Field();
+        $fieldIns = $field->filter(['test']);
+        $this->assertInstanceOf(Field::class, $fieldIns);
+        $this->assertEquals($field->getFilters(), ['test']);
+    }
+
     public function testSetUri()
     {
         $this->setMethodTest('uri', 'test');
