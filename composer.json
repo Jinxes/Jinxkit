@@ -1,6 +1,6 @@
 {
     "name": "jinxes/jinxkit",
-    "description": "A simple framework",
+    "description": "A restful router",
     "minimum-stability": "stable",
     "type": "library",
     "version": "1.0.1",
