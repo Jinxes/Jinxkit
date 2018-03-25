@@ -121,7 +121,7 @@ class SayHello
     }
 }
 ```
-must put the service in front of all the parameters and declaring with service name<br />
+You must put the service in front of all the parameters and declaring with service name<br />
 visit: [http://localhost:8080/index.php/api/sayhello/world](http://localhost:8080/index.php/api/sayhello/world)
 ```
 hello world
