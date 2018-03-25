@@ -67,3 +67,32 @@ will show:
 filter pass 
 hello world
 ```
+* define a RESTful router
+```php
+class SayHello
+{
+    public function get()
+    {
+        echo 'this is a GET request';
+    }
+
+    public function say($lang)
+    {
+        echo 'hello ' . $lang;
+    }
+}
+
+Route::restful('api', SayHello::class, function($router) {
+    $router->get('sayhello/:str', SayHello::class, 'say');
+});
+
+Route::start();
+```
+visit: [http://localhost:8080/index.php/api/sayhello/world](http://localhost:8080/index.php/api/sayhello/world)
+```
+hello world
+```
+visit: [http://localhost:8080/index.php/api](http://localhost:8080/index.php/api)
+```
+this is a GET request
+```
