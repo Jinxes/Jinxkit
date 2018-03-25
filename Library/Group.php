@@ -10,5 +10,19 @@ namespace Jinxkit\Library;
  */
 class Group extends FieldFactory
 {
-    
+    /**
+     * @param string $uri
+     * @param string $className
+     * @param callback|null $callable
+     * 
+     * @return Field
+     */
+    public function restful($uri, $className, $callable = null)
+    {
+        $field = $this->method(null, $uri, $className);
+        if (!is_null($callable)) {
+            $this->restfulCallbackHandle($callable, $this->makeUri($uri), $field);
+        }
+        return $field;
+    }
 }

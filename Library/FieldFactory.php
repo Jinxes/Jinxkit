@@ -8,29 +8,21 @@ namespace Jinxkit\Library;
  * @author   Jinxes<blldxt@yahoo.com>
  * @version  1.0
  */
-abstract class FieldFactory
+class FieldFactory
 {
     /** @var string */
     private $uri = '';
+
+    /** @var array */
+    private $filters = [];
+
+    /** @var Field|null */
+    public $fromField = null;
 
     /** @param string $uri */
     public function setUri($uri)
     {
         $this->uri = $uri;
-    }
-
-    /**
-     * @param string $uri
-     * @param string $className
-     * @param callback|null $callable
-     * 
-     * @return Field
-     */
-    public function restful($uri, $className, $callable = null)
-    {
-        $field = $this->method(null, $uri, $className);
-        $this->callbackHandle($callable, $this->makeUri($uri));
-        return $field;
     }
 
     /**
@@ -106,6 +98,29 @@ abstract class FieldFactory
     }
 
     /**
+     * @param array $filters
+     */
+    public function filter(array $filters)
+    {
+        $this->filters = $filters;
+    }
+
+    /**
+     * @param callback|null $callable
+     * @param string $fieldUri
+     * @param Field $fromField parent Field
+     * 
+     * @internal
+     */
+    protected function restfulCallbackHandle($callable, $fieldUri, $fromField)
+    {
+        $fieldFactory = new self();
+        $fieldFactory->setUri($fieldUri);
+        $fieldFactory->fromField = $fromField;
+        $callable($fieldFactory);
+    }
+
+    /**
      * @param string|null $methodType
      * @param string $uri
      * @param string $className
@@ -120,45 +135,48 @@ abstract class FieldFactory
         $field->setUri($fieldUri);
         $field->setHttpMethod($methodType);
         if (is_string($className)) {
-            $field->setClassName($className);
-            $field->setFunc($func);
-            $field->setType(Field::TYPE_REST);
+            $this->makeRestField($field, $className, $func);
         } else {
-            $field->setFunc($className);
-            $field->setType(Field::TYPE_EMBED);
+            $this->makeEmbedField($field, $className);
         }
+        $field->parentField = $this->fromField;
+        $field->filter($this->filters);
         Storage::attach($field);
         return $field;
     }
 
     /**
-     * @param callback|null $callable
-     * @param string $fieldUri
-     * 
-     * @internal
+     * @param Field $field
+     * @param string $className
+     * @param string $func
      */
-    private function callbackHandle($callable, $fieldUri)
+    protected function makeRestField(&$field, $className, $func)
     {
-        if (!is_null($callable)) {
-            $fieldFactory = new Group();
-            $fieldFactory->setUri($fieldUri);
-            $callable($fieldFactory);
-        }
+        $field->setClassName($className);
+        $field->setFunc($func);
+        $field->setType(Field::TYPE_REST);
     }
 
     /**
-     * make uri string for Field object
+     * @param Field $field
+     * @param callback $func
+     */
+    protected function makeEmbedField(&$field, $func)
+    {
+        $field->setFunc($func);
+        $field->setType(Field::TYPE_EMBED);
+    }
+
+    /**
+     * base url + field url
      * @param string $uri
      * 
      * @return string
      * 
      * @internal
      */
-    private function makeUri($uri)
+    protected function makeUri($uri)
     {
-        if ($this->uri === '') {
-            return $uri;
-        }
-        return $this->uri . '/' . $uri;
+        return ($this->uri === '') ? $uri : $this->uri . '/' . $uri;
     }
 }

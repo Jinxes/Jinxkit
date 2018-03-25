@@ -15,9 +15,9 @@ use Jinxkit\Library\HttpException;
 
 class User
 {
-    public function get()
+    public function get($num)
     {
-        echo 2122;
+        echo $num;
     }
 
     public function test2($num)
@@ -32,8 +32,6 @@ class Midtest
     {
         if (array_shift($this->args) == 1) {
             throw new HttpException(405);
-        } else {
-            echo 'hahaha';
         }
     }
 }
@@ -44,25 +42,40 @@ class Midtest2
     {
         if (array_shift($this->args) == 1) {
             throw new HttpException(405);
-        } else {
-            echo 'hahaha';
         }
     }
 }
 
+class Midtest3
+{
+    public function entry()
+    {
+        print_r(array_shift($this->args));
+        // if (array_shift($this->args) == 1) {
+        //     throw new HttpException(405);
+        // }
+    }
+}
+
+Route::config([
+    'filterEntry' => 'entry'
+]);
+
 Route::group('api', function(Router $router) {
-    $field2 = $router->restful('user', User::class, function(Router $router1) {
-        $router1->get('testGet', User::class, 'get')
-            ->setName('testGet');
-    });
+    $router->filter([Midtest3::class]);
+
+    $field2 = $router->restful('user', User::class, function($router) {
+        $router->get('testGet/:num/:str', User::class, 'get')
+            ->setName('testGet')->filter([Midtest::class]);
+    })->filter([Midtest2::class]);
 });
 
 // Route::get('user2/:num', User::class, 'test2')
 // ->setName('user2');
 
-// Route::get('user3/:num', function (User $user, $num) {
-//     $user->get();
-// })
-// ->setName('user3');
+Route::get('user3/:num', function (User $user, $num) {
+    $user->get($num);
+})->filter([Midtest3::class])
+->setName('user3');
 header('Content-Type: application/json');
 Route::start();

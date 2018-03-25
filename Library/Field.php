@@ -37,6 +37,25 @@ class Field
     /** @var array */
     private $name;
 
+    /** @var array */
+    private $filters = [];
+
+    /** @var FieldFactory|null */
+    public $parentField = null;
+
+    /** @param array $filters */
+    public function filter(array $filters)
+    {
+        $this->filters = array_merge($this->filters, $filters);
+        return $this;
+    }
+
+    /** @return array|null */
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
     /** @param string $uri */
     public function setUri($uri)
     {

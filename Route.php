@@ -18,7 +18,8 @@ class Route
 {
     /** @var array */
     private static $configure = [
-        'midwareEntry' => '__invoke'
+        'filterEntry' => '__invoke',
+        'filterArgs' => 'args'
     ];
 
     /** @param array $config */
@@ -36,7 +37,6 @@ class Route
         $group = new Group();
         $group->setUri($groupUri);
         $callable($group);
-        return $group;
     }
 
     /**
@@ -173,9 +173,9 @@ class Route
         
         if ($field->methodIsValid()) {
             $params = Storage::getParamsFromUrl($field->getUri(), static::getPathInfo());
-            // if (! static::callMidwares($field, $params)) {
-            //     return false;
-            // }
+            if (! static::callFilters($field, $params)) {
+                return false;
+            }
             static::callController($field, $params);
         } else {
             throw new HttpException(405);
@@ -185,26 +185,36 @@ class Route
     /**
      * @param Field $field
      * @param array $params
-     * 
      * @return bool
-     * 
-     * @internal
      */
-    public static function callMidwares($field, $params)
+    private static function callFilters($field, $params)
     {
-        $fieldMidwares = $field->getMidware();
-        $groupMidwares = $field->getGroupMidware();
-        $midwares = array_merge($fieldMidwares, $groupMidwares);
-        foreach ($midwares as $midware) {
-            $container = Container::initialization($midware);
+        $filters = static::getFiltersByField($field);
+        foreach ($filters as $filter) {
+            $container = Container::initialization($filter);
             $instance = $container->getInstance();
-            $instance->args = $params;
-            $result = $container->reverse(static::$configure['midwareEntry']);
+            $argsField = static::$configure['filterArgs'];
+            $instance->$argsField = $params;
+            $result = $container->reverse(static::$configure['filterEntry']);
             if ($result === false) {
                 return false;
             }
         }
         return true;
+    }
+
+    /**
+     * @param Field $field
+     * @param array $curentFilters
+     * @return array
+     */
+    private static function getFiltersByField($field, $curentFilters = [])
+    {
+        if (is_null($field->parentField)) {
+            return array_merge($field->getFilters(), $curentFilters);
+        }
+        $swap = array_merge($field->getFilters(), $curentFilters);
+        return static::getFiltersByField($field->parentField, $swap);
     }
 
     /**
