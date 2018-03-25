@@ -34,7 +34,7 @@ Route::get('sayhello/:str', SayHello::class, 'say');
 
 Route::start();
 ```
-## Open the development Server for test
+* Open the development Server for test
 ```
 php -S localhost:8080
 ```
@@ -44,7 +44,7 @@ and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:808
 hello world
 ```
 
-## add some filters
+* add some filters
 define a filter class and add for the SayHello router
 ```php
 class Filter
