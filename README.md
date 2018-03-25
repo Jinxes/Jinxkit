@@ -109,7 +109,7 @@ class SayService
 }
 ```
 service class is some singleton objects maintenance by DI system<br />
-and the construct of service can be injected
+and the construct of services also can be injected
 
 * inject services
 ```php
