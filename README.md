@@ -137,4 +137,5 @@ visit: [http://localhost:8080/index.php/api/sayhello/world](http://localhost:808
 ```
 hello world
 ```
+* filter and embed function also support DI container.
 #### update by Jinxes <blldxt@yahoo.com>
