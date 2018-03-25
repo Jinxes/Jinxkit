@@ -13,9 +13,29 @@ I was tested on 5.5 and 7.1 (linux/windows), it work properly
 composer require jinxes/jinxkit dev-master
 ```
 ## Get start
-* require a Route
+* require the Route
 ```php
 require 'vendor/autoload.php';
 
 use Jinxes\Jinxkit\Route;
 ```
+
+* define a controller and connect to the router
+```php
+class User
+{
+    public function get($lang)
+    {
+        echo 'hello ' . $lang;
+    }
+}
+
+Route::get('sayhello/:str', SayHello::class);
+
+Route::start();
+```
+## Open the development Server for test
+```
+php -S localhost:8080
+```
+and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:8080/index.php/sayhello/world)
