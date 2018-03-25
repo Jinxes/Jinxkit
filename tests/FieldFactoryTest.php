@@ -4,6 +4,7 @@ namespace Jinxkit\tests;
 
 use PHPUnit\Framework\TestCase;
 use Jinxkit\Library\FieldFactory;
+use Jinxkit\Library\Group;
 use Jinxkit\Library\Storage;
 use Jinxkit\Library\Field;
 use ReflectionClass;
@@ -13,7 +14,7 @@ class FieldFactoryTest extends TestCase
 {
     public function testRestful()
     {
-        $ff = new FieldFactory();
+        $ff = new Group();
         $ff->setUri('test/:num');
         $fieldFast = $ff->restful('user', 'User', function($router) {
             return true;
