@@ -13,9 +13,9 @@ I was tested on 5.5 and 7.1 (linux/windows), it work properly
 composer require jinxes/jinxkit dev-master
 ```
 ## Get start
+require a Route
 ```php
 require 'vendor/autoload.php';
 
 use Jinxes\Jinxkit\Route;
-use Jinxes\Jinxkit\Library\HttpException;
 ```
