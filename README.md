@@ -1,2 +1,2 @@
-# Jinxkit
-A restful route
+# Jinxes/Jinxkit
+A minimal restful framework
