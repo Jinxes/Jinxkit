@@ -126,4 +126,4 @@ visit: [http://localhost:8080/index.php/api/sayhello/world](http://localhost:808
 ```
 hello world
 ```
-#### This library will be update by Jinxes<blldxt@yahoo.com>
+#### This library will be update by Jinxes <blldxt@yahoo.com>
