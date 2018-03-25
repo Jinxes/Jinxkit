@@ -39,4 +39,31 @@ Route::start();
 php -S localhost:8080
 ```
 and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:8080/index.php/sayhello/world)
-<br />will show `hello world`
+<br />will show:
+```
+hello world
+```
+
+## add some filters
+define a filter class and add for the SayHello router
+```php
+class Filter
+{
+    public function __invoke()
+    {
+        $lang = array_shift($this->args);
+        if ($lang === 'world') {
+            echo 'filter pass <br />';
+        } else {
+            return false;
+        }
+    }
+}
+
+Route::get('sayhello/:str', SayHello::class, 'say')->filter([Filter::class]);
+```
+will show:
+```
+filter pass 
+hello world
+```
