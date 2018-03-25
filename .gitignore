@@ -1,4 +1,4 @@
 vendor
-composer.lock
 ./tests
 ./index.php
+composer.lock
