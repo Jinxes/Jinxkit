@@ -24,13 +24,13 @@ use Jinxes\Jinxkit\Route;
 ```php
 class User
 {
-    public function get($lang)
+    public function say($lang)
     {
         echo 'hello ' . $lang;
     }
 }
 
-Route::get('sayhello/:str', SayHello::class);
+Route::get('sayhello/:str', SayHello::class, 'say');
 
 Route::start();
 ```
@@ -39,3 +39,4 @@ Route::start();
 php -S localhost:8080
 ```
 and visit: [http://localhost:8080/index.php/sayhello/world](http://localhost:8080/index.php/sayhello/world)
+will show `hello world`
