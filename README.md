@@ -96,3 +96,32 @@ visit: [http://localhost:8080/index.php/api](http://localhost:8080/index.php/api
 ```
 this is a GET request
 ```
+
+## dependency injection for filter and controller
+* Define a Service class
+```php
+class SayService
+{
+    public function hello()
+    {
+        echo 'hello ';
+    }
+}
+```
+service class is some singleton objects maintenance by DI system<br />
+and the construct of service can be injected
+
+* inject services
+```php
+class SayHello
+{
+    public function say(SayService $sayService, $lang)
+    {
+        echo $sayService->hello() . $lang;
+    }
+}
+```
+must put the service in front of all the parameters and declaring with service name<br />
+visit: [http://localhost:8080/index.php/api/sayhello/world](http://localhost:8080/index.php/api/sayhello/world)
+```
+hello world
