@@ -22,7 +22,7 @@ use Jinxes\Jinxkit\Route;
 
 * define a controller and connect to the router
 ```php
-class User
+class SayHello
 {
     public function say($lang)
     {
